@@ -1,4 +1,5 @@
 ﻿using System;
+using VacationApp.Serviсes;
 
 namespace VacationApp
 {
@@ -6,6 +7,7 @@ namespace VacationApp
     {
         static void Main(string[] args)
         {
+            RundomEmployeeGenerator reg = new();
             Console.WriteLine("Hello World!");
         }
     }
