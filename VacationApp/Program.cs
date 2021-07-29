@@ -1,5 +1,6 @@
 ﻿using System;
 using VacationApp.Serviсes;
+using VacationApp.Models; 
 
 namespace VacationApp
 {
@@ -7,8 +8,13 @@ namespace VacationApp
     {
         static void Main(string[] args)
         {
-            RundomEmployeeGenerator reg = new();
-            Console.WriteLine("Hello World!");
+            RandomEmployeeGenerator reg = new();
+            for (int i = 0; i < 100; i++)
+            {
+                Employee employee = reg.GetNewEmployee();
+                Console.WriteLine(employee.ToString());
+            }
+
         }
     }
 }
