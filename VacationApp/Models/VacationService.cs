@@ -11,19 +11,22 @@ namespace VacationApp.Models
     {
         private readonly Dictionary<DateTime, List<int>> _vacationCalendar = new ();
         private readonly Dictionary<int, Vacation> _vacations = new ();
+        private readonly Random _random = new();
         private int _nextVacationId = 0;
 
 
-        public void AddVacation(Employee employee, DateTime begin, int duration)
+        public bool AddVacation(Employee employee, DateTime begin, int duration)
         {
+            /*
             if (begin.CompareTo(DateTime.Today) <= 0)
                 throw new ArgumentOutOfRangeException(nameof(begin), "The selected date is not available.");
-
+            */
             var intersections = GetIntersectingVacations(begin, duration);
             foreach (var inter in intersections)
             {
                 if (inter.Employee.Id == employee.Id)
-                    throw new ArgumentOutOfRangeException(nameof(begin), "Employee already have vacation at this period!");
+                    return false;
+//                    throw new ArgumentOutOfRangeException(nameof(begin), "Employee already have vacation at this period!");
             }
 
             var vacation = new Vacation()
@@ -45,6 +48,45 @@ namespace VacationApp.Models
                     vacationsList = new List<int> { vacation.Id };
                     _vacationCalendar.Add(begin.AddDays(i), vacationsList);
                 }
+            }
+            return true;
+        }
+
+        public bool AddVacationToRandomDate(Employee employee, int year, int duration, int attempts = 10)
+        {
+            int daysRate = DateTime.IsLeapYear(year) ? 366 : 365;
+            DateTime vacationBegin = new(year, 1, 1);
+            for (int i = 0; i < attempts; i++)
+            {
+                int randomDayInYear = _random.Next(daysRate - duration);
+                vacationBegin = vacationBegin.AddDays(randomDayInYear);
+                if (AddVacation(employee, vacationBegin, duration))
+                    return true;
+            }
+            return false;
+        }
+
+        public IEnumerable<Vacation> GetAllVacationsByEmployeeId(int employeeId)
+        {
+            var employeeVacations = _vacations.Select(kvp => kvp.Value)
+                .Where(v => v.Employee.Id == employeeId);
+            return employeeVacations;
+        }
+
+        public void RemoveVacation(int vacationId)
+        {
+            // Dictionary<int, Vacation> _vacations = new();
+            
+            if (_vacations.TryGetValue(vacationId, out Vacation vacation))
+            {
+                DateTime date = vacation.Begin;
+
+                while(date <= vacation.End)
+                {
+                    _vacationCalendar.Remove(date);
+                    date.AddDays(1);
+                }
+                _vacations.Remove(vacationId);
             }
         }
 
