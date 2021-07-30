@@ -8,6 +8,6 @@ namespace VacationApp.Models
 {
     public class VacationDay
     {
-        public List<Vacation> Vacations;
+        public List<int> Vacations { get; set; }
     }
 }

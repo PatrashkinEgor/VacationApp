@@ -30,6 +30,8 @@ namespace VacationApp.Models
 
     public class Employee
     {
+        [Required]
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Не указано имя работника")]
         public string Name{ get; set; }

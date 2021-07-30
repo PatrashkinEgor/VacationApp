@@ -9,10 +9,22 @@ namespace VacationApp
         static void Main(string[] args)
         {
             RandomEmployeeGenerator reg = new();
-            for (int i = 0; i < 100; i++)
+            Employee employee = reg.GetNewEmployee();
+            Console.WriteLine(employee.ToString());
+            VacationService vs = new();
+            DateTime begin = DateTime.Today.AddDays(1);
+            vs.AddVacation(employee, begin, 7);
+            employee = reg.GetNewEmployee();
+            vs.AddVacation(employee, begin.AddDays(3), 7);
+            employee = reg.GetNewEmployee();
+            vs.AddVacation(employee, begin.AddDays(30), 7);
+
+
+
+            Console.WriteLine("Отпуска без пересечения:");
+            foreach (var vacation in vs.GetAllNotIntersectingVacations())
             {
-                Employee employee = reg.GetNewEmployee();
-                Console.WriteLine(employee.ToString());
+                Console.WriteLine(vacation.ToString());
             }
 
         }

@@ -15,8 +15,9 @@ namespace VacationApp.Serviсes
 
     public class RandomEmployeeGenerator : IEmployeeFactory
     {
-        Random _rand = new();
-        Settings _settings;
+        private readonly Random _rand = new();
+        private readonly Settings _settings;
+        private int _nextEmployeeId = 0;
 
         public static string createFemaleSurnameFromMale(string MaleSurname)
         {
@@ -38,24 +39,25 @@ namespace VacationApp.Serviсes
             string name, secondName;
             int age;
 
-            Gender g = (Gender)_rand.Next(Enum.GetValues(typeof(Gender)).Length);
-            if (g == Gender.Female) surname = createFemaleSurnameFromMale(surname);
-            GenderSpecificSettings gSettings = g == Gender.Male ? _settings.Male : _settings.Female;
+            Gender gender = (Gender)_rand.Next(Enum.GetValues(typeof(Gender)).Length);
+            if (gender == Gender.Female) surname = createFemaleSurnameFromMale(surname);
+            GenderSpecificSettings gSettings = gender == Gender.Male ? _settings.Male : _settings.Female;
             name = gSettings.Names[_rand.Next(gSettings.Names.Length)];
             secondName = gSettings.SecondNames[_rand.Next(gSettings.SecondNames.Length)];
             age = _rand.Next(_settings.MinHiringAge, gSettings.RetirementAge);
-            Position p = (Position)_rand.Next(Enum.GetValues(typeof(Position)).Length);
+            Position position = (Position)_rand.Next(Enum.GetValues(typeof(Position)).Length);
 
             return new Employee()
             {
+                Id = _nextEmployeeId++,
                 Age = age,
                 Name = name,
                 SecondName = secondName,
                 Surname = surname,
-                Gender = g,
-                Position = p
+                Gender = gender,
+                Position = position
 
-        };
+            };
         }
 
         public class GenderSpecificSettings

@@ -8,8 +8,15 @@ namespace VacationApp.Models
 {
     public class Vacation
     {
-        public Employee Employee{ get; set; }
+        public int Id { get; set; }
+        public Employee Employee { get; set; }
         public DateTime Begin { get; set; }
         public DateTime End { get; set; }
+
+        public override string ToString()
+        {
+            return Begin.ToString() + " - " + End.ToString() + " - " + Employee.Name +
+                " - " + Employee.SecondName + " - " + Employee.Surname + " - " + Employee.Age;
+        }
     }
 }
