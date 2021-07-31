@@ -15,8 +15,9 @@ namespace VacationApp.Models
 
         public override string ToString()
         {
-            return Begin.ToString("dd/MM/yyyy") + " - " + End.ToString("dd/MM/yyyy") + " - " + Employee.Name +
-                " - " + Employee.SecondName + " - " + Employee.Surname + " - " + Employee.Age;
+            return String.Format("{0} - {1} - {2} {3} {4} - {5} ", 
+                Begin.ToString("dd/MM/yyyy"), End.ToString("dd/MM/yyyy"), 
+                Employee.Name, Employee.SecondName, Employee.Surname, Employee.Age);
         }
     }
 }
