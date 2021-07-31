@@ -18,16 +18,13 @@ namespace VacationApp.Models
         public bool AddVacation(Employee employee, DateTime begin, int duration)
         {
             /*
-            if (begin.CompareTo(DateTime.Today) <= 0)
-                throw new ArgumentOutOfRangeException(nameof(begin), "The selected date is not available.");
-            */
-            var intersections = GetIntersectingVacations(begin, duration);
+            var intersections = GetVacations(begin, duration);
             foreach (var inter in intersections)
             {
                 if (inter.Employee.Id == employee.Id)
                     return false;
-//                    throw new ArgumentOutOfRangeException(nameof(begin), "Employee already have vacation at this period!");
             }
+            */
 
             var vacation = new Vacation()
             {
@@ -75,8 +72,6 @@ namespace VacationApp.Models
 
         public void RemoveVacation(int vacationId)
         {
-            // Dictionary<int, Vacation> _vacations = new();
-            
             if (_vacations.TryGetValue(vacationId, out Vacation vacation))
             {
                 DateTime date = vacation.Begin;
@@ -90,18 +85,18 @@ namespace VacationApp.Models
             }
         }
 
-        public IEnumerable<Vacation> GetIntersectingVacations(DateTime begin, int duration)
+        public IEnumerable<Vacation> GetVacations(DateTime begin, int duration)
         {
-            List<int> intersectingVacationsId = new();
+            List<int> vacationsId = new();
             for (int i = 0; i < duration; i++)
             {
                 if (_vacationCalendar.TryGetValue(begin.AddDays(i), out List<int> vacationsList))
                 {
-                    intersectingVacationsId = intersectingVacationsId.Union(vacationsList).ToList();
+                    vacationsId = vacationsId.Union(vacationsList).ToList();
                 }
             }
-            var intersectingVacations = intersectingVacationsId.Select(id => _vacations[id]);
-            return intersectingVacations;
+            var vacations = vacationsId.Select(id => _vacations[id]);
+            return vacations;
         }
 
         public IEnumerable<Vacation> GetAllNotIntersectingVacations()
