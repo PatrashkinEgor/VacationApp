@@ -1,16 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace VacationApp.Models
 {
+    /// <summary>
+    /// Simple vacation model
+    /// </summary>
     public class Vacation
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
         public Employee Employee { get; set; }
+        [Required]
         public DateTime Begin { get; set; }
+        [Required]
         public DateTime End { get; set; }
 
         public override string ToString()

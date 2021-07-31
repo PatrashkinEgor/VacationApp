@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace VacationApp.Models
 {
-
+    /// <summary>
+    /// Gender is required for employee name generator.
+    /// </summary>
     public enum Gender
     {
         Male,
         Female
     }
-
+    /// <summary>
+    /// Simple employee model
+    /// </summary>
     public class Employee
     {
         [Required]
@@ -41,7 +41,6 @@ namespace VacationApp.Models
         {
             return String.Format("Сотрудник: {0} {1} {2} Должность: {3}", Name, SecondName, Surname, Position);
         }
-        //TODO: override "=="
     }
 
 }
