@@ -8,20 +8,6 @@ using System.ComponentModel.DataAnnotations;
 namespace VacationApp.Models
 {
 
-    public enum Position
-    {
-        Менеджер,
-        Аудитор,
-        Мастер,
-        Инженер,
-        Лаборант,
-        Диспетчер,
-        Бухгалтер,
-        Переводчик,
-        Кассир,
-        Редактор
-    }
-
     public enum Gender
     {
         Male,
@@ -49,12 +35,13 @@ namespace VacationApp.Models
         public Gender Gender { get; set; }
 
         [Required(ErrorMessage = "Не указана должность")]
-        public Position Position { get; set; }
+        public String Position { get; set; }
 
         public override string ToString()
         {
-            return "Работник: " + Name + "\t" + SecondName + "\t" + Surname + ".\t Должность: " + Position;
+            return String.Format("Сотрудник: {0} {1} {2} Должность: {3}", Name, SecondName, Surname, Position);
         }
+        //TODO: override "=="
     }
 
 }
