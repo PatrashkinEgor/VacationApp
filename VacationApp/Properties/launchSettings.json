@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VacationApp": {
+      "commandName": "Project",
+      "sqlDebugging": true
+    }
+  }
+}
