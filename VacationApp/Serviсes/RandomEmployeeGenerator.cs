@@ -11,7 +11,19 @@ using System.Text.RegularExpressions;
 
 namespace VacationApp.Serviсes
 {
-
+    public enum Position
+    {
+        Менеджер,
+        Аудитор,
+        Мастер,
+        Инженер,
+        Лаборант,
+        Диспетчер,
+        Бухгалтер,
+        Переводчик,
+        Кассир,
+        Редактор
+    }
 
     public class RandomEmployeeGenerator : IEmployeeFactory
     {
@@ -29,7 +41,7 @@ namespace VacationApp.Serviсes
         }
         public RandomEmployeeGenerator()
         {
-            _settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("../../../Serviсes/REGSettings.json"));
+            _settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("../../../REGSettings.json"));
         }
 
         public Employee GetNewEmployee()
@@ -55,7 +67,7 @@ namespace VacationApp.Serviсes
                 SecondName = secondName,
                 Surname = surname,
                 Gender = gender,
-                Position = position
+                Position = position.ToString()
 
             };
         }
